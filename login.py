@@ -1,6 +1,6 @@
 from config import *
 
-def login(): 
+def log(): 
     # find the username and password box, login button and complete the form
     userBox = wait.until(EC.presence_of_element_located((By.NAME, 'username')))
     passBox = wait.until(EC.presence_of_element_located((By.NAME, 'password')))

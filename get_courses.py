@@ -1,11 +1,10 @@
 from config import *
-from login import *
-from navigation import * 
+from login import log
+from navigation import grades 
 from bs4 import BeautifulSoup
-import time
 
 # login -> navigate to the 'grades' tab
-login()
+log()
 grades()
 
 source = driver.page_source

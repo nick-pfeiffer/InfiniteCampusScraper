@@ -1,8 +1,6 @@
 from config import *
-import time
 
 # each function navigates to a tab on the menu in IC
-
 def calendar(): 
     pass
 
