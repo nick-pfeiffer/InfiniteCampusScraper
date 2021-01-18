@@ -1,2 +1,2 @@
 # InfiniteCampusScraper
-get basic data from infinite campus
+get data from infinite campus
