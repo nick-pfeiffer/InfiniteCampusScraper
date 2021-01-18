@@ -1,7 +1,6 @@
 from config import *
-from Login import *
-from Navigation import * 
+from login import *
+from navigation import * 
 
-# start()
 login()
 grades()

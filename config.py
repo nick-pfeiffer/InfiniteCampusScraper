@@ -11,6 +11,7 @@ import time
 load_dotenv(find_dotenv())
 username = os.getenv('INFINITE_USERNAME')
 password = os.getenv('INFINITE_PASSWORD')
+url = os.getenv('INFINITE_URL')
 
 chrome_options = Options()
 # chrome_options.add_argument("--headless")
@@ -19,4 +20,4 @@ driver = webdriver.Chrome(options=chrome_options)
 
 wait = WebDriverWait(driver, 10)
 
-driver.get('https://greatneckny.infinitecampus.org/campus/portal/students/greatneck.jsp')
+driver.get(url)

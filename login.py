@@ -19,7 +19,3 @@ def navToGrades():
     gradesTab = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '#navigation-top > ic-sidebar > div > ic-tool-list > nav > ul > li:nth-child(4)')))
     gradesTab.click()
 
-# login()
-# navToGrades()
-
-# print(driver.current_url)
