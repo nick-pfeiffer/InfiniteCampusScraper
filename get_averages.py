@@ -3,23 +3,25 @@ from login import log
 from navigation import grades
 from bs4 import BeautifulSoup
 from get_courses import courses
-import itertools
 import re
 
-def averages():
+def averages(term):
     courseList = courses()
 
     # more waiting cause IC is slow
     wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'body > app-root > ng-component > app-grades > app-portal-page > div.workspace-content.workspace-content--with-toolbar > div > div > div > app-term-picker > div > div.term-picker__header > div > kendo-buttongroup')))
 
+    term_btn = driver.find_elements_by_xpath("//button[contains(@class, 'k-button')]")
+    term_btn[term].click()
+
     source = driver.page_source
     all_subjects_soup = BeautifulSoup(source, 'html.parser')
 
-    previous = None
 
     # what will be returned
     averages = {}
 
+    previous = None
     for sub, cur_course in zip(all_subjects_soup.find_all('div', {'class': 'collapsible-card__content'}), courseList):
         # switch frame to default frame so it can then switch to the proper frame 
         driver.switch_to.default_content()
@@ -43,12 +45,11 @@ def averages():
         cur_subject_soup = BeautifulSoup(driver.page_source, 'html.parser')
         
         cat_dict = {}
-
         previous_total_earned=previous_total_possible = 0
         for cat in cur_subject_soup.find_all('button', {'class': 'divider__item divider__header ng-star-inserted'}):
             category = re.sub(r'Weight: \d*', '', cat.text).strip()
-            xpath_search = "//*[contains(text(), '" + re.sub(r'Weight: \d*', '', cat.text).strip() + '\')]'
-
+            xpath_search = "//div[contains(text(), '" + re.sub(r'Weight: \d*', '', cat.text).strip() + '\')]'
+            
             cur_cat = driver.find_element_by_xpath(xpath_search)
             cur_cat.click()
             
@@ -57,7 +58,6 @@ def averages():
             grades_in_category_soup = BeautifulSoup(driver.page_source, 'html.parser')
 
             total_earned=total_possible=score = 0
-
             for cur_score in grades_in_category_soup('li', {'class': 'assignment__row break-word clickable flex--space-between ng-star-inserted'}):
                 try: 
                     # score: earned/possible  (percentNumber%)
@@ -71,8 +71,8 @@ def averages():
 
             cat_dict[category] = str(total_earned - previous_total_earned) + ' / ' + str(total_possible - previous_total_possible)
 
-            previous_total_earned += total_earned
-            previous_total_possible += total_possible
+            previous_total_earned += float(cat_dict[category].split(' / ')[0])
+            previous_total_possible += float(cat_dict[category].split(' / ')[1])
 
         averages[cur_course] = cat_dict
 
