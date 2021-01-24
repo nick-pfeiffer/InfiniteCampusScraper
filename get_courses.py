@@ -3,10 +3,10 @@ from login import log
 from navigation import grades 
 from bs4 import BeautifulSoup
 
-def courses(): 
+def courses(started): 
     # login -> navigate to the 'grades' tab
-    log()
-    grades()
+    log(started)
+    grades(started)
 
     source = driver.page_source
     soup = BeautifulSoup(source, 'html.parser')

@@ -5,8 +5,8 @@ from bs4 import BeautifulSoup
 from get_courses import courses
 import re
 
-def averages(term):
-    courseList = courses()
+def averages(term, started):
+    courseList = courses(started)
 
     # more waiting cause IC is slow
     wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'body > app-root > ng-component > app-grades > app-portal-page > div.workspace-content.workspace-content--with-toolbar > div > div > div > app-term-picker > div > div.term-picker__header > div > kendo-buttongroup')))
@@ -69,10 +69,10 @@ def averages(term):
                     # exception called if no grade is given in IC (so just skip that)
                     continue
 
-            cat_dict[category] = str(total_earned - previous_total_earned) + ' / ' + str(total_possible - previous_total_possible)
+            cat_dict[category] = str(total_earned - previous_total_earned) + '/' + str(total_possible - previous_total_possible)
 
-            previous_total_earned += float(cat_dict[category].split(' / ')[0])
-            previous_total_possible += float(cat_dict[category].split(' / ')[1])
+            previous_total_earned += float(cat_dict[category].split('/')[0])
+            previous_total_possible += float(cat_dict[category].split('/')[1])
 
         averages[cur_course] = cat_dict
 

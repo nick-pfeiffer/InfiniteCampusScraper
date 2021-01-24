@@ -7,7 +7,7 @@ def calendar():
 def assignments(): 
     pass
 
-def grades():
+def grades(started):
     # nav to menu
     menu = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, '#navigation-top > ic-header > header > ic-menu-toggle > button')))
     menu.click()

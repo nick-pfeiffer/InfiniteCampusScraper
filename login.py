@@ -1,6 +1,9 @@
 from config import *
 
-def log(): 
+def log(started): 
+    # if started: return
+    start()
+
     # find the username and password box, login button and complete the form
     userBox = wait.until(EC.presence_of_element_located((By.NAME, 'username')))
     passBox = wait.until(EC.presence_of_element_located((By.NAME, 'password')))
@@ -12,4 +15,3 @@ def log():
     
     # wait cause IC is slow
     wait.until(lambda d: 'today' in d.current_url)
-
